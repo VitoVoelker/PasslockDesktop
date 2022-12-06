@@ -1,9 +1,9 @@
 # Can't get it to work in `encryption.py` file, while using .exe thus had to add it in main.py
 import hashlib
-from Crypto import Random
-from Crypto.Cipher import AES
+#from Crypto import Random
+#from Crypto.Cipher import AES
 from base64 import urlsafe_b64encode, urlsafe_b64decode
-
+from kivy.uix.relativelayout import RelativeLayout
 import os
 os.chdir(rf"{os.path.dirname(os.path.realpath(__file__))}")
 
@@ -78,6 +78,7 @@ else:
     size_x, size_y = 1100, 850
     Window.minimum_height = size_y
     Window.minimum_width = 700
+    
 Window.left = (screenx - size_x)/2
 Window.top = (screeny - size_y)/2
 Window.size = (size_x, size_y)
@@ -157,6 +158,8 @@ class MainApp(MDApp):
         self.root.load_screen("SignupScreen" if self.signup else "LoginScreen")
         if not self.signup:
             self.root.LoginScreen.ids.password.focus = True
+        Clock.schedule_once(lambda *args: self.print_pos(), 5)
+            
 
     def on_primary_palette(self, instance, value):
         self.theme_cls.primary_palette = value
@@ -349,9 +352,65 @@ class MainApp(MDApp):
             self.firebase.backup_failure = lambda *args: failure(*args)
             self.password_changed = False
 
-    def on_stop(self):
+    def on_stop(self, inst):
         self.save_config.save_settings()
 
+    def print_pos(self):
+        import numpy as np
+        import cv2 as cv2
+        windowsizex = 1100
+        windowsizey = 850
 
+        ids = {self.root.SignupScreen.ids.signup, self.root.SignupScreen.ids.login, self.root.SignupScreen.ids.email, self.root.SignupScreen.ids.password}
+        img = cv2.imread(r"C:\\Main 06.12.2022 14_58_33.jpg")
+        
+        for id in ids:
+
+            pos = id.pos
+            size = id.size
+            pos_x = int(pos[0])
+            pos_y = int(pos[1])
+            width = int(size[0])
+            height = int(size[1])
+            print(str(id))
+            print("x:" + str(pos_x))
+            print("y:"+ str(pos_y))
+            print("width:"+str(width))
+            print("height:"+str(height))
+            print("--------")
+            
+            #cv2.rectangle(img,(pos_x,850-pos_y),(pos_x+width,850-pos_y+height),(0,255,0),1)
+            cv2.rectangle(img,(pos_x,815-pos_y),(pos_x+width,815-pos_y+height),(255,0,0),1)
+            
+            
+        cv2.imshow("lalala", img)
+        k = cv2.waitKey(0)    
+        '''
+        kivy
+        y
+        |
+        |
+        |
+        |
+        |__________x
+    
+        cv
+        ___________x
+        |
+        |
+        |
+        |
+        |
+        y
+
+        window 1100 x 850 
+
+        x = x
+        y = 850-y
+        '''
+
+        
 if __name__ == "__main__":
     MainApp().run()
+    
+    

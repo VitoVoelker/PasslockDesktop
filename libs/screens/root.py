@@ -46,6 +46,7 @@ class Root(ScreenManager):
                 exec(f"self.{screen_name} = self.screen_object")
                 # finnaly adds the screen to the screen-manager
                 self.add_widget(self.screen_object)
+                print(str(self.screen_object.pos))
 
         # saves screen information to history
         # if you not want a screen to go back

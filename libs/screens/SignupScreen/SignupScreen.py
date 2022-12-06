@@ -116,3 +116,5 @@ class SignupScreen(MDScreen):
             self.signup(email, password)
         else:
             self.login(email, password)
+
+        
