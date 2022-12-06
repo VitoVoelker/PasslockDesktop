@@ -355,6 +355,7 @@ class MainApp(MDApp):
     def on_stop(self, inst):
         self.save_config.save_settings()
 
+    ## is called in the build function 5 seconds after the app has build
     def print_pos(self):
         import numpy as np
         import cv2 as cv2
@@ -362,7 +363,7 @@ class MainApp(MDApp):
         windowsizey = 850
 
         ids = {self.root.SignupScreen.ids.signup, self.root.SignupScreen.ids.login, self.root.SignupScreen.ids.email, self.root.SignupScreen.ids.password}
-        img = cv2.imread(r"C:\\Main 06.12.2022 14_58_33.jpg")
+        img = cv2.imread(r"screenshot_kivyapp.jpg")
         
         for id in ids:
 
@@ -372,6 +373,7 @@ class MainApp(MDApp):
             pos_y = int(pos[1])
             width = int(size[0])
             height = int(size[1])
+
             print(str(id))
             print("x:" + str(pos_x))
             print("y:"+ str(pos_y))
@@ -379,11 +381,14 @@ class MainApp(MDApp):
             print("height:"+str(height))
             print("--------")
             
-            #cv2.rectangle(img,(pos_x,850-pos_y),(pos_x+width,850-pos_y+height),(0,255,0),1)
-            cv2.rectangle(img,(pos_x,815-pos_y),(pos_x+width,815-pos_y+height),(255,0,0),1)
+            ## draws rectangle on image 
+            cv2.rectangle(img,(pos_x,850-pos_y),(pos_x+width,850-pos_y+height),(0,255,0),1)
+
+            ##statische Verschiebung nach oben um 15 35 pixel
+            #cv2.rectangle(img,(pos_x,815-pos_y),(pos_x+width,815-pos_y+height),(255,0,0),1)  
             
             
-        cv2.imshow("lalala", img)
+        cv2.imshow("Bounding Box Preview", img)
         k = cv2.waitKey(0)    
         '''
         kivy
